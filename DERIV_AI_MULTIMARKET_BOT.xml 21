@@ -1,0 +1,86 @@
+<xml xmlns="https://developers.google.com/blockly/xml" is_dbot="true">
+  <variables>
+    <variable id="stake">stake</variable>
+    <variable id="confidence">confidence</variable>
+    <variable id="min_confidence">min_confidence</variable>
+    <variable id="market_index">market_index</variable>
+    <variable id="market_list">market_list</variable>
+  </variables>
+
+  <block type="trade_definition" x="0" y="0">
+    <statement name="TRADE_OPTIONS">
+      <block type="trade_definition_market">
+        <field name="MARKET_LIST">synthetic_index</field>
+        <field name="SUBMARKET_LIST">random_index</field>
+        <field name="SYMBOL_LIST">R_10</field>
+
+        <next>
+          <block type="trade_definition_tradetype">
+            <field name="TRADETYPECAT_LIST">digits</field>
+            <field name="TRADETYPE_LIST">overunder</field>
+
+            <next>
+              <block type="trade_definition_contracttype">
+                <field name="TYPE_LIST">both</field>
+              </block>
+            </next>
+
+          </block>
+        </next>
+      </block>
+    </statement>
+
+    <statement name="INITIALIZATION">
+      <block type="variables_set">
+        <field name="VAR">market_index</field>
+        <value name="VALUE">
+          <block type="math_number">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+
+        <next>
+          <block type="variables_set">
+            <field name="VAR">min_confidence</field>
+            <value name="VALUE">
+              <block type="math_number">
+                <field name="NUM">80</field>
+              </block>
+            </value>
+          </block>
+        </next>
+
+      </block>
+    </statement>
+  </block>
+
+  <block type="before_purchase" x="0" y="300">
+    <statement name="BEFOREPURCHASE_STACK">
+      <block type="controls_if">
+        <value name="IF0">
+          <block type="logic_compare">
+            <field name="OP">GTE</field>
+            <value name="A">
+              <block type="variables_get">
+                <field name="VAR">confidence</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_get">
+                <field name="VAR">min_confidence</field>
+              </block>
+            </value>
+          </block>
+        </value>
+
+        <statement name="DO0">
+          <block type="purchase">
+            <field name="PURCHASE_LIST">DIGITUNDER</field>
+          </block>
+        </statement>
+
+      </block>
+    </statement>
+  </block>
+
+</xml>
